@@ -2,8 +2,13 @@ name: Weekly Windsor permit scrape
 
 on:
   schedule:
-    - cron: "15 11 * * 1"   # Mondays 11:15 UTC = 7:15 a.m. Windsor (EDT)
-  workflow_dispatch: {}      # adds a "Run workflow" button for manual runs
+    - cron: "15 11 * * 1"
+  workflow_dispatch:
+    inputs:
+      full_rebuild:
+        description: "Reprocess all reports from scratch"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -23,8 +28,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run scraper
-        run: python windsor_permits.py
+     - name: Run scraper
+        run: python windsor_permits.py ${{ inputs.full_rebuild == true && '--full' || '' }}
 
       - name: Commit updated data
         run: |
