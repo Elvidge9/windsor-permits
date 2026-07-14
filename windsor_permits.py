@@ -85,15 +85,26 @@ RETRY_BACKOFF = 10  # seconds, doubled each retry
 # Permit descriptions must match at least one of these (case-insensitive).
 # \b word boundaries so "ADU" doesn't match "GRADUATE" etc.
 INCLUDE_PATTERNS = [
+    # --- ADUs / secondary units ---
     r"\bADU\b",
     r"\bADUS\b",
     r"ADDITIONAL DWELLING UNIT",
     r"SECONDARY\s*/?\s*ADDITIONAL",
     r"SECONDARY SUITE",
+    # --- Water service / meters ---
     r"\bWATER SERVICE\b",
     r"\bWATER METER\b",
     r"\bMETER PIT\b",
     r"\bMETER INSTALLATION\b",
+    # --- New construction: residential ---
+    r"\bCONSTRUCT\b.*\b(DWELLING|TOWNHOUSE|TOWNHOME|DUPLEX|TRIPLEX|"
+    r"APARTMENT|MULTIPLE DWELLING)\b",
+    r"\bNEW\b.*\bDWELLING\b",
+    # --- New construction: commercial / industrial / institutional ---
+    r"\bERECT\b",
+    r"\bCONSTRUCT\b.*\b(BUILDING|WAREHOUSE|STORE|PLAZA|CENTRE|CENTER|"
+    r"FACILITY|OFFICE|RESTAURANT|HOTEL|SCHOOL|CHURCH|CLINIC)\b",
+]
 ]
 
 # If a description matches any of these, skip it even if an include
